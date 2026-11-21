@@ -1,0 +1,13 @@
+Texture Credits
+===============
+
+All textures in this folder come from ambientCG (https://ambientcg.com)
+and are licensed under CC0 1.0 Universal (public domain).
+No attribution is required, but the sources are listed for reference.
+
+WallTexture.jpg / WallNormal.jpg            <- Wallpaper001A (1K-JPG)     https://ambientcg.com/view?id=Wallpaper001A
+WallMoldTexture.jpg / WallMoldNormal.jpg    <- Wallpaper002C (1K-JPG)     https://ambientcg.com/view?id=Wallpaper002C
+FloorTexture.jpg / FloorNormal.jpg          <- Fabric028 (1K-JPG)         https://ambientcg.com/view?id=Fabric028
+CeilingTexture.jpg / CeilingNormal.jpg      <- OfficeCeiling001 (1K-JPG)  https://ambientcg.com/view?id=OfficeCeiling001
+
+Normal maps use the OpenGL (NormalGL) convention, which matches Unity.

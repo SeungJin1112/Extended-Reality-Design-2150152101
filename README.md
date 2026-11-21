@@ -6,7 +6,7 @@
 
 **익숙하지만 낯선 공간, 끝없이 이어지는 백룸을 VR로 경험하다.**
 
-![Unity](https://img.shields.io/badge/Unity-6000-222222?style=flat-square&logo=unity&logoColor=white)
+![Unity](https://img.shields.io/badge/Unity-2022.3-222222?style=flat-square&logo=unity&logoColor=white)
 ![CSharp](https://img.shields.io/badge/Language-C%23-512BD4?style=flat-square)
 ![MetaQuest](https://img.shields.io/badge/Target-Meta%20Quest-0081FB?style=flat-square&logo=meta&logoColor=white)
 ![XR](https://img.shields.io/badge/XR-Interaction%20Toolkit-D6C66B?style=flat-square)
@@ -35,7 +35,7 @@ Unity 기반으로 백룸 공간과 상호작용을 구현하는 XR 프로젝트
 
 <div align="center">
 
-<img src="https://img.shields.io/badge/Unity-6000-222222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity 6000">
+<img src="https://img.shields.io/badge/Unity-2022.3-222222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity 2022.3">
 <img src="https://img.shields.io/badge/C%23-512BD4?style=for-the-badge" alt="C#">
 <img src="https://img.shields.io/badge/Meta_Quest-0081FB?style=for-the-badge&logo=meta&logoColor=white" alt="Meta Quest">
 
@@ -45,7 +45,7 @@ Unity 기반으로 백룸 공간과 상호작용을 구현하는 XR 프로젝트
 
 | 구분 | 구성 |
 |:---|:---|
-| **Engine** | Unity Editor **6000** |
+| **Engine** | Unity Editor **2022.3.21f1** |
 | **Language** | C# |
 | **XR Interaction** | XR Interaction Toolkit |
 | **Player Origin** | XR Origin |
@@ -164,7 +164,7 @@ Unity 기반으로 백룸 공간과 상호작용을 구현하는 XR 프로젝트
 <hr>
 
 <div align="center">
-    <sub>THE BACKROOMS · UNITY 6000 · META QUEST</sub>
+    <sub>THE BACKROOMS · UNITY 2022.3 · META QUEST</sub>
     <br><br>
     <a href="#the-backrooms">맨 위로 ↑</a>
 </div>
