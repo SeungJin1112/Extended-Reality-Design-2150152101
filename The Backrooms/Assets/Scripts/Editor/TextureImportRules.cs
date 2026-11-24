@@ -3,18 +3,23 @@ using UnityEngine;
 
 namespace Backrooms.EditorTools
 {
-    /// <summary>
-    /// Assets/Textures 아래 텍스처의 임포트 설정을 자동으로 맞춘다.
-    /// - 파일명이 "Normal"로 끝나면 Normal Map으로 임포트
-    /// - Quest(Android)용 ASTC 압축, 최대 1024px
-    /// </summary>
     public class TextureImportRules : AssetPostprocessor
     {
-        const string TextureFolder = "Assets/Textures/";
+        static readonly string[] RootFolders = { "Assets/Player/", "Assets/Structure/", "Assets/Objects/" };
+
+        static bool IsManaged(string path)
+        {
+            if (!path.Contains("/Textures/"))
+                return false;
+            foreach (var root in RootFolders)
+                if (path.StartsWith(root))
+                    return true;
+            return false;
+        }
 
         void OnPreprocessTexture()
         {
-            if (!assetPath.StartsWith(TextureFolder))
+            if (!IsManaged(assetPath))
                 return;
 
             var importer = (TextureImporter)assetImporter;
@@ -23,6 +28,7 @@ namespace Backrooms.EditorTools
             importer.textureType = fileName.EndsWith("Normal")
                 ? TextureImporterType.NormalMap
                 : TextureImporterType.Default;
+            importer.sRGBTexture = !(fileName.EndsWith("Normal") || fileName.EndsWith("MetallicSmoothness") || fileName.EndsWith("Roughness"));
             importer.wrapMode = TextureWrapMode.Repeat;
             importer.mipmapEnabled = true;
             importer.anisoLevel = 4;

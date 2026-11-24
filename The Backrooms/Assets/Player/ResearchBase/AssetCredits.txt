@@ -1,0 +1,5 @@
+Asset Credits - Player/ResearchBase
+모든 항목은 CC0 1.0 (퍼블릭 도메인)입니다. 출처 표기 의무는 없지만 참고용으로 기록합니다.
+
+OldGasMask                         Poly Haven  https://polyhaven.com/a/old_gas_mask
+VintageRadioTransceiver            Poly Haven  https://polyhaven.com/a/vintage_radio_transceiver

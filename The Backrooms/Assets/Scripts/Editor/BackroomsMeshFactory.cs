@@ -4,11 +4,6 @@ using UnityEngine;
 
 namespace Backrooms.EditorTools
 {
-    /// <summary>
-    /// 백룸 구조물용 메시를 만든다.
-    /// UV는 미터 단위로 계산되므로, 머티리얼 Tiling = 1 / (텍스처 한 장이 덮는 미터)로 두면
-    /// 크기가 달라도 텍스처 밀도가 일정하게 유지된다.
-    /// </summary>
     public class BackroomsMeshFactory
     {
         readonly List<Vector3> vertices = new List<Vector3>();
@@ -18,32 +13,57 @@ namespace Backrooms.EditorTools
         readonly List<int> triangles = new List<int>();
         float surfaceArea;
 
-        /// <summary>라이트맵 UV 여백 계산에 쓰는 기준 해상도(라이트맵 텍셀/미터). 라이팅 설정과 맞출 것.</summary>
-        public const float LightmapTexelsPerMeter = 6f;
+        public const float LightmapTexelsPerMeter = 4f;
 
-        /// <summary>축 정렬 박스를 추가한다. skipBottom/skipTop은 안 보이는 면을 생략할 때 사용.</summary>
+        [System.Flags]
+        public enum Faces
+        {
+            None = 0, PosX = 1, NegX = 2, PosY = 4, NegY = 8, PosZ = 16, NegZ = 32,
+            Sides = PosX | NegX | PosZ | NegZ,
+            All = Sides | PosY | NegY,
+        }
+
+        public int VertexCount => vertices.Count;
+
         public BackroomsMeshFactory AddBox(Vector3 center, Vector3 size, bool skipBottom = false, bool skipTop = false)
+        {
+            var faces = Faces.All;
+            if (skipBottom) faces &= ~Faces.NegY;
+            if (skipTop) faces &= ~Faces.PosY;
+            return AddBox(center, size, faces);
+        }
+
+        public BackroomsMeshFactory AddBox(Vector3 center, Vector3 size, Faces faces)
         {
             var h = size * 0.5f;
             var min = center - h;
             var max = center + h;
 
-            // 각 면: origin = 바깥에서 봤을 때 왼쪽 아래, uDir = 오른쪽, vDir = 위 (시계방향 = 앞면)
-            // +X / -X
-            AddQuad(new Vector3(max.x, min.y, min.z), Vector3.forward, Vector3.up, size.z, size.y, Vector3.right, new Vector2(min.z, min.y));
-            AddQuad(new Vector3(min.x, min.y, max.z), Vector3.back, Vector3.up, size.z, size.y, Vector3.left, new Vector2(-max.z, min.y));
-            // +Z / -Z
-            AddQuad(new Vector3(max.x, min.y, max.z), Vector3.left, Vector3.up, size.x, size.y, Vector3.forward, new Vector2(-max.x, min.y));
-            AddQuad(new Vector3(min.x, min.y, min.z), Vector3.right, Vector3.up, size.x, size.y, Vector3.back, new Vector2(min.x, min.y));
-            // +Y / -Y
-            if (!skipTop)
+            if ((faces & Faces.PosX) != 0)
+                AddQuad(new Vector3(max.x, min.y, min.z), Vector3.forward, Vector3.up, size.z, size.y, Vector3.right, new Vector2(min.z, min.y));
+            if ((faces & Faces.NegX) != 0)
+                AddQuad(new Vector3(min.x, min.y, max.z), Vector3.back, Vector3.up, size.z, size.y, Vector3.left, new Vector2(-max.z, min.y));
+            if ((faces & Faces.PosZ) != 0)
+                AddQuad(new Vector3(max.x, min.y, max.z), Vector3.left, Vector3.up, size.x, size.y, Vector3.forward, new Vector2(-max.x, min.y));
+            if ((faces & Faces.NegZ) != 0)
+                AddQuad(new Vector3(min.x, min.y, min.z), Vector3.right, Vector3.up, size.x, size.y, Vector3.back, new Vector2(min.x, min.y));
+            if ((faces & Faces.PosY) != 0)
                 AddQuad(new Vector3(min.x, max.y, min.z), Vector3.right, Vector3.forward, size.x, size.z, Vector3.up, new Vector2(min.x, min.z));
-            if (!skipBottom)
+            if ((faces & Faces.NegY) != 0)
                 AddQuad(new Vector3(min.x, min.y, max.z), Vector3.right, Vector3.back, size.x, size.z, Vector3.down, new Vector2(min.x, -max.z));
             return this;
         }
 
-        /// <summary>수평 사각형 한 장 (바닥은 위, 천장은 아래를 향함).</summary>
+        public BackroomsMeshFactory AddHorizontalRect(float minX, float minZ, float maxX, float maxZ, float y, bool faceDown)
+        {
+            float w = maxX - minX, d = maxZ - minZ;
+            if (faceDown)
+                AddQuad(new Vector3(minX, y, maxZ), Vector3.right, Vector3.back, w, d, Vector3.down, new Vector2(minX, -maxZ));
+            else
+                AddQuad(new Vector3(minX, y, minZ), Vector3.right, Vector3.forward, w, d, Vector3.up, new Vector2(minX, minZ));
+            return this;
+        }
+
         public BackroomsMeshFactory AddHorizontalQuad(float width, float depth, float y, bool faceDown)
         {
             if (faceDown)
@@ -70,7 +90,6 @@ namespace Backrooms.EditorTools
             uvs.Add(uvOrigin + new Vector2(uLen, vLen));
             uvs.Add(uvOrigin + new Vector2(uLen, 0f));
 
-            // Unity: bitangent = cross(normal, tangent) * w. 이 배치에서는 cross(n, u) = -v 이므로 w = -1.
             var tangent = new Vector4(uDir.x, uDir.y, uDir.z, -1f);
             for (int i = 0; i < 4; i++)
             {
@@ -86,8 +105,76 @@ namespace Backrooms.EditorTools
             triangles.Add(start + 3);
         }
 
-        /// <summary>메시를 만들고 라이트맵용 UV2를 생성한 뒤 에셋으로 저장한다.</summary>
-        /// <param name="lightmapScale">렌더러의 Scale In Lightmap 값. UV 여백 계산에 반영된다.</param>
+        public BackroomsMeshFactory AddQuadPoints(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Vector3 normal, Vector2 ua, Vector2 ub, Vector2 uc, Vector2 ud)
+        {
+            int start = vertices.Count;
+            surfaceArea += (Vector3.Cross(b - a, d - a).magnitude + Vector3.Cross(b - c, d - c).magnitude) * 0.5f;
+            vertices.Add(a); vertices.Add(b); vertices.Add(c); vertices.Add(d);
+            uvs.Add(ua); uvs.Add(ub); uvs.Add(uc); uvs.Add(ud);
+            var t = (d - a).sqrMagnitude > 1e-8f ? (d - a).normalized : (c - b).normalized;
+            float w = Vector3.Dot(Vector3.Cross(normal, t), b - a) >= 0f ? 1f : -1f;
+            for (int i = 0; i < 4; i++) { normals.Add(normal); tangents.Add(new Vector4(t.x, t.y, t.z, w)); }
+            if (Vector3.Dot(Vector3.Cross(b - a, c - a), normal) >= 0f)
+                triangles.AddRange(new[] { start, start + 1, start + 2, start, start + 2, start + 3 });
+            else
+                triangles.AddRange(new[] { start, start + 2, start + 1, start, start + 3, start + 2 });
+            return this;
+        }
+
+        public BackroomsMeshFactory AddArchWallX(float x0, float x1, float zc, float height, float thick, float pier, float opening, float spring, int segments = 14)
+        {
+            float zf = zc - thick / 2, zb = zc + thick / 2, r = opening / 2;
+            int bays = Mathf.Max(1, Mathf.FloorToInt((x1 - x0 - pier) / (pier + opening)));
+            float used = bays * (pier + opening) + pier;
+            float start = x0 + (x1 - x0 - used) / 2;
+
+            void Wall(float a, float b, float y0, float y1)
+            {
+                if (b - a < 1e-4f || y1 - y0 < 1e-4f) return;
+                AddQuadPoints(new Vector3(a, y0, zf), new Vector3(a, y1, zf), new Vector3(b, y1, zf), new Vector3(b, y0, zf), Vector3.back,
+                    new Vector2(a, y0), new Vector2(a, y1), new Vector2(b, y1), new Vector2(b, y0));
+                AddQuadPoints(new Vector3(b, y0, zb), new Vector3(b, y1, zb), new Vector3(a, y1, zb), new Vector3(a, y0, zb), Vector3.forward,
+                    new Vector2(-b, y0), new Vector2(-b, y1), new Vector2(-a, y1), new Vector2(-a, y0));
+            }
+            void Jamb(float x, float y0, float y1, float dir)
+            {
+                var n = new Vector3(dir, 0, 0);
+                AddQuadPoints(new Vector3(x, y0, zf), new Vector3(x, y1, zf), new Vector3(x, y1, zb), new Vector3(x, y0, zb), n,
+                    new Vector2(zf, y0), new Vector2(zf, y1), new Vector2(zb, y1), new Vector2(zb, y0));
+            }
+
+            Wall(x0, start, 0, height);
+            Wall(start + used, x1, 0, height);
+            float x = start;
+            for (int i = 0; i < bays; i++)
+            {
+                Wall(x, x + pier, 0, height);
+                if (i == 0 && start - x0 < 1e-3f) Jamb(x, 0, height, -1f);
+                Jamb(x + pier, 0, spring, 1f);
+                float ox = x + pier, cx = ox + r;
+                for (int s = 0; s < segments; s++)
+                {
+                    float t0 = Mathf.PI * s / segments, t1 = Mathf.PI * (s + 1) / segments;
+                    float ax = cx - r * Mathf.Cos(t0), ay = spring + r * Mathf.Sin(t0);
+                    float bx = cx - r * Mathf.Cos(t1), by = spring + r * Mathf.Sin(t1);
+                    AddQuadPoints(new Vector3(ax, ay, zf), new Vector3(ax, height, zf), new Vector3(bx, height, zf), new Vector3(bx, by, zf), Vector3.back,
+                        new Vector2(ax, ay), new Vector2(ax, height), new Vector2(bx, height), new Vector2(bx, by));
+                    AddQuadPoints(new Vector3(bx, by, zb), new Vector3(bx, height, zb), new Vector3(ax, height, zb), new Vector3(ax, ay, zb), Vector3.forward,
+                        new Vector2(-bx, by), new Vector2(-bx, height), new Vector2(-ax, height), new Vector2(-ax, ay));
+                    var mid = new Vector3((ax + bx) / 2, (ay + by) / 2, zc);
+                    var inward = new Vector3(cx - mid.x, spring - mid.y, 0).normalized;
+                    float arc0 = r * t0, arc1 = r * t1;
+                    AddQuadPoints(new Vector3(ax, ay, zf), new Vector3(ax, ay, zb), new Vector3(bx, by, zb), new Vector3(bx, by, zf), inward,
+                        new Vector2(arc0, zf), new Vector2(arc0, zb), new Vector2(arc1, zb), new Vector2(arc1, zf));
+                }
+                Jamb(ox + opening, 0, spring, -1f);
+                x += pier + opening;
+            }
+            Wall(x, x + pier, 0, height);
+            if (x1 - (start + used) < 1e-3f) Jamb(x + pier, 0, height, 1f);
+            return this;
+        }
+
         public Mesh SaveAsset(string name, string folder, float lightmapScale = 1f)
         {
             var mesh = new Mesh { name = name };
@@ -98,8 +185,6 @@ namespace Backrooms.EditorTools
             mesh.SetTriangles(triangles, 0);
             mesh.RecalculateBounds();
 
-            // 기본 여백(packMargin)은 1024텍셀 기준이라, 라이트맵에서 작게 차지하는 메시는 UV가 겹친다.
-            // 메시가 라이트맵에서 차지할 대략적인 텍셀 폭을 구해 약 2.5텍셀 여백이 되도록 맞춘다.
             UnwrapParam.SetDefaults(out var unwrap);
             float texelWidth = Mathf.Sqrt(surfaceArea) * LightmapTexelsPerMeter * lightmapScale;
             unwrap.packMargin = Mathf.Clamp(2.5f / Mathf.Max(texelWidth, 1f), 0.004f, 0.25f);

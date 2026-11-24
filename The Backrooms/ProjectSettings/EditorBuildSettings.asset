@@ -8,6 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Backrooms.unity
     guid: b72ce9ba29685e2448ab9851c6fc67e4
+  - enabled: 1
+    path: Assets/Scenes/Zones/Zone00ResearchBase.unity
+    guid: 97ca418fbbcaf4545a03b33007057cef
+  - enabled: 1
+    path: Assets/Scenes/Zones/Zone01Level0.unity
+    guid: d82c664a8feabbc4fb877a43151dfc9b
+  - enabled: 1
+    path: Assets/Scenes/Zones/Zone02AmusementPark.unity
+    guid: 5f975e33ff647fd4e94d5468d9aaf30d
+  - enabled: 1
+    path: Assets/Scenes/Zones/Zone03PoolRooms.unity
+    guid: 34bac0175e36dd842b280d02ecef7528
+  - enabled: 1
+    path: Assets/Scenes/Zones/Zone04ResearchBaseEmpty.unity
+    guid: e3823a536c0e96e4ebeb1289c2cb334d
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 359ec468d9fff38419ba4fb2fbedc097, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 8678576f2daa86f4992ebb751839bfc7, type: 2}

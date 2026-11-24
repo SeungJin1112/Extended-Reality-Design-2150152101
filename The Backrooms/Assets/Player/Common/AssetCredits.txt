@@ -1,0 +1,13 @@
+Asset Credits - Player/Common
+모든 항목은 CC0 1.0 (퍼블릭 도메인)입니다. 출처 표기 의무는 없지만 참고용으로 기록합니다.
+
+Binoculars                         Poly Haven  https://polyhaven.com/a/binoculars
+DigitalWristWatch                  Poly Haven  https://polyhaven.com/a/digital_wrist_watch
+GardenGloves01                     Poly Haven  https://polyhaven.com/a/garden_gloves_01
+PlasticTorch6v                     Poly Haven  https://polyhaven.com/a/pastic_torch_6v
+PortableSearchlight                Poly Haven  https://polyhaven.com/a/portable_searchlight
+RoundSpectacles                    Poly Haven  https://polyhaven.com/a/round_spectacles
+SignalFlashlight                   Poly Haven  https://polyhaven.com/a/signal_flashlight
+SmallPlasticTorch                  Poly Haven  https://polyhaven.com/a/small_plastic_torch
+VintageBinocular                   Poly Haven  https://polyhaven.com/a/vintage_binocular
+VintageFlashlight                  Poly Haven  https://polyhaven.com/a/vintage_flashlight

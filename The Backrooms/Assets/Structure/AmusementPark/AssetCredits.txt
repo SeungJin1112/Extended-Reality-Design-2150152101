@@ -1,0 +1,80 @@
+Asset Credits - Structure/AmusementPark
+모든 항목은 CC0 1.0 (퍼블릭 도메인)입니다. 출처 표기 의무는 없지만 참고용으로 기록합니다.
+
+Asphalt031                         ambientCG   https://ambientcg.com/view?id=Asphalt031
+Asphalt033                         ambientCG   https://ambientcg.com/view?id=Asphalt033
+BrassDiyaLantern                   Poly Haven  https://polyhaven.com/a/brass_diya_lantern
+Chandelier01                       Poly Haven  https://polyhaven.com/a/Chandelier_01
+Chandelier02                       Poly Haven  https://polyhaven.com/a/Chandelier_02
+Chandelier03                       Poly Haven  https://polyhaven.com/a/Chandelier_03
+ChineseChandelier                  Poly Haven  https://polyhaven.com/a/chinese_chandelier
+Concrete049                        ambientCG   https://ambientcg.com/view?id=Concrete049
+CorrugatedSteel005                 ambientCG   https://ambientcg.com/view?id=CorrugatedSteel005
+Fabric019                          ambientCG   https://ambientcg.com/view?id=Fabric019
+Fabric030                          ambientCG   https://ambientcg.com/view?id=Fabric030
+Fabric036                          ambientCG   https://ambientcg.com/view?id=Fabric036
+Fabric061                          ambientCG   https://ambientcg.com/view?id=Fabric061
+Fabric062                          ambientCG   https://ambientcg.com/view?id=Fabric062
+Fabric066                          ambientCG   https://ambientcg.com/view?id=Fabric066
+Fabric081C                         ambientCG   https://ambientcg.com/view?id=Fabric081C
+Fabric082A                         ambientCG   https://ambientcg.com/view?id=Fabric082A
+Fabric083                          ambientCG   https://ambientcg.com/view?id=Fabric083
+Fabric084                          ambientCG   https://ambientcg.com/view?id=Fabric084
+Fabric085                          ambientCG   https://ambientcg.com/view?id=Fabric085
+Fabric086                          ambientCG   https://ambientcg.com/view?id=Fabric086
+LanternChandelier01                Poly Haven  https://polyhaven.com/a/lantern_chandelier_01
+LargeIronGate                      Poly Haven  https://polyhaven.com/a/large_iron_gate
+Metal027                           ambientCG   https://ambientcg.com/view?id=Metal027
+Metal028                           ambientCG   https://ambientcg.com/view?id=Metal028
+Metal029                           ambientCG   https://ambientcg.com/view?id=Metal029
+ModularStreetSeating               Poly Haven  https://polyhaven.com/a/modular_street_seating
+PaintedBricks001                   ambientCG   https://ambientcg.com/view?id=PaintedBricks001
+PaintedBricks002                   ambientCG   https://ambientcg.com/view?id=PaintedBricks002
+PaintedBricks003                   ambientCG   https://ambientcg.com/view?id=PaintedBricks003
+PaintedBricks004                   ambientCG   https://ambientcg.com/view?id=PaintedBricks004
+PaintedMetal001                    ambientCG   https://ambientcg.com/view?id=PaintedMetal001
+PaintedMetal004                    ambientCG   https://ambientcg.com/view?id=PaintedMetal004
+PaintedMetal006                    ambientCG   https://ambientcg.com/view?id=PaintedMetal006
+PaintedMetal009                    ambientCG   https://ambientcg.com/view?id=PaintedMetal009
+PaintedMetal012                    ambientCG   https://ambientcg.com/view?id=PaintedMetal012
+PaintedMetal013                    ambientCG   https://ambientcg.com/view?id=PaintedMetal013
+PaintedMetal016                    ambientCG   https://ambientcg.com/view?id=PaintedMetal016
+PaintedMetal017                    ambientCG   https://ambientcg.com/view?id=PaintedMetal017
+PaintedPlaster009                  ambientCG   https://ambientcg.com/view?id=PaintedPlaster009
+PaintedPlaster011                  ambientCG   https://ambientcg.com/view?id=PaintedPlaster011
+Planks005                          ambientCG   https://ambientcg.com/view?id=Planks005
+Planks010                          ambientCG   https://ambientcg.com/view?id=Planks010
+Planks028                          ambientCG   https://ambientcg.com/view?id=Planks028
+Plastic001                         ambientCG   https://ambientcg.com/view?id=Plastic001
+Plastic006                         ambientCG   https://ambientcg.com/view?id=Plastic006
+Plastic007                         ambientCG   https://ambientcg.com/view?id=Plastic007
+Plastic008                         ambientCG   https://ambientcg.com/view?id=Plastic008
+Plastic009                         ambientCG   https://ambientcg.com/view?id=Plastic009
+Plastic010                         ambientCG   https://ambientcg.com/view?id=Plastic010
+Plastic011                         ambientCG   https://ambientcg.com/view?id=Plastic011
+Plastic012A                        ambientCG   https://ambientcg.com/view?id=Plastic012A
+Plastic012B                        ambientCG   https://ambientcg.com/view?id=Plastic012B
+Plastic013A                        ambientCG   https://ambientcg.com/view?id=Plastic013A
+Plastic013B                        ambientCG   https://ambientcg.com/view?id=Plastic013B
+Plastic014A                        ambientCG   https://ambientcg.com/view?id=Plastic014A
+Plastic015A                        ambientCG   https://ambientcg.com/view?id=Plastic015A
+Plastic015B                        ambientCG   https://ambientcg.com/view?id=Plastic015B
+Plastic016A                        ambientCG   https://ambientcg.com/view?id=Plastic016A
+Plastic017A                        ambientCG   https://ambientcg.com/view?id=Plastic017A
+Plastic018A                        ambientCG   https://ambientcg.com/view?id=Plastic018A
+Plastic018B                        ambientCG   https://ambientcg.com/view?id=Plastic018B
+Road007                            ambientCG   https://ambientcg.com/view?id=Road007
+Road008A                           ambientCG   https://ambientcg.com/view?id=Road008A
+Road008B                           ambientCG   https://ambientcg.com/view?id=Road008B
+Road009C                           ambientCG   https://ambientcg.com/view?id=Road009C
+Road012A                           ambientCG   https://ambientcg.com/view?id=Road012A
+Road012B                           ambientCG   https://ambientcg.com/view?id=Road012B
+Road013A                           ambientCG   https://ambientcg.com/view?id=Road013A
+Rubber001                          ambientCG   https://ambientcg.com/view?id=Rubber001
+Rubber002                          ambientCG   https://ambientcg.com/view?id=Rubber002
+Rubber003                          ambientCG   https://ambientcg.com/view?id=Rubber003
+Rubber004                          ambientCG   https://ambientcg.com/view?id=Rubber004
+StreetLamp01                       Poly Haven  https://polyhaven.com/a/street_lamp_01
+StreetLamp02                       Poly Haven  https://polyhaven.com/a/street_lamp_02
+VintageOilLamp                     Poly Haven  https://polyhaven.com/a/vintage_oil_lamp
+WoodenCandlestick                  Poly Haven  https://polyhaven.com/a/wooden_candlestick

@@ -1,0 +1,77 @@
+Asset Credits - Structure/Common
+모든 항목은 CC0 1.0 (퍼블릭 도메인)입니다. 출처 표기 의무는 없지만 참고용으로 기록합니다.
+
+CagedHangingLight                  Poly Haven  https://polyhaven.com/a/caged_hanging_light
+CeilingFan                         Poly Haven  https://polyhaven.com/a/ceiling_fan
+Concrete012                        ambientCG   https://ambientcg.com/view?id=Concrete012
+Concrete019                        ambientCG   https://ambientcg.com/view?id=Concrete019
+Concrete020                        ambientCG   https://ambientcg.com/view?id=Concrete020
+Concrete023                        ambientCG   https://ambientcg.com/view?id=Concrete023
+Concrete024                        ambientCG   https://ambientcg.com/view?id=Concrete024
+Concrete035                        ambientCG   https://ambientcg.com/view?id=Concrete035
+HangingIndustrialLamp              Poly Haven  https://polyhaven.com/a/hanging_industrial_lamp
+IndustrialCagedSconce              Poly Haven  https://polyhaven.com/a/industrial_caged_sconce
+IndustrialWallLamp                 Poly Haven  https://polyhaven.com/a/industrial_wall_lamp
+IndustrialWallSconce               Poly Haven  https://polyhaven.com/a/industrial_wall_sconce
+Marble006                          ambientCG   https://ambientcg.com/view?id=Marble006
+Marble012                          ambientCG   https://ambientcg.com/view?id=Marble012
+Marble014                          ambientCG   https://ambientcg.com/view?id=Marble014
+Marble016                          ambientCG   https://ambientcg.com/view?id=Marble016
+Marble021                          ambientCG   https://ambientcg.com/view?id=Marble021
+ModernCeilingLamp01                Poly Haven  https://polyhaven.com/a/modern_ceiling_lamp_01
+ModularAirductCircular01           Poly Haven  https://polyhaven.com/a/modular_airduct_circular_01
+ModularAirductRectangular01        Poly Haven  https://polyhaven.com/a/modular_airduct_rectangular_01
+ModularElectricCables              Poly Haven  https://polyhaven.com/a/modular_electric_cables
+ModularPipes                       Poly Haven  https://polyhaven.com/a/modular_pipes
+ModularPipesPlastic01              Poly Haven  https://polyhaven.com/a/modular_pipes_plastic_01
+MountedFluorescentLights           Poly Haven  https://polyhaven.com/a/mounted_fluorescent_lights
+Onyx013                            ambientCG   https://ambientcg.com/view?id=Onyx013
+Onyx015                            ambientCG   https://ambientcg.com/view?id=Onyx015
+PavingStones136                    ambientCG   https://ambientcg.com/view?id=PavingStones136
+Planks021                          ambientCG   https://ambientcg.com/view?id=Planks021
+Planks023A                         ambientCG   https://ambientcg.com/view?id=Planks023A
+Planks033B                         ambientCG   https://ambientcg.com/view?id=Planks033B
+Planks037A                         ambientCG   https://ambientcg.com/view?id=Planks037A
+Planks037B                         ambientCG   https://ambientcg.com/view?id=Planks037B
+Planks039                          ambientCG   https://ambientcg.com/view?id=Planks039
+Planks040                          ambientCG   https://ambientcg.com/view?id=Planks040
+Plaster001                         ambientCG   https://ambientcg.com/view?id=Plaster001
+Plaster002                         ambientCG   https://ambientcg.com/view?id=Plaster002
+Plaster003                         ambientCG   https://ambientcg.com/view?id=Plaster003
+Plaster004                         ambientCG   https://ambientcg.com/view?id=Plaster004
+Plaster006                         ambientCG   https://ambientcg.com/view?id=Plaster006
+Plaster007                         ambientCG   https://ambientcg.com/view?id=Plaster007
+PullChainLightSocket               Poly Haven  https://polyhaven.com/a/pull_chain_light_socket
+RoofingTiles012A                   ambientCG   https://ambientcg.com/view?id=RoofingTiles012A
+RoofingTiles013A                   ambientCG   https://ambientcg.com/view?id=RoofingTiles013A
+RoofingTiles014A                   ambientCG   https://ambientcg.com/view?id=RoofingTiles014A
+Terrazzo004                        ambientCG   https://ambientcg.com/view?id=Terrazzo004
+Terrazzo005                        ambientCG   https://ambientcg.com/view?id=Terrazzo005
+Terrazzo011                        ambientCG   https://ambientcg.com/view?id=Terrazzo011
+Terrazzo013                        ambientCG   https://ambientcg.com/view?id=Terrazzo013
+Terrazzo018                        ambientCG   https://ambientcg.com/view?id=Terrazzo018
+Tiles052                           ambientCG   https://ambientcg.com/view?id=Tiles052
+Tiles074                           ambientCG   https://ambientcg.com/view?id=Tiles074
+Tiles078                           ambientCG   https://ambientcg.com/view?id=Tiles078
+Tiles093                           ambientCG   https://ambientcg.com/view?id=Tiles093
+Tiles110                           ambientCG   https://ambientcg.com/view?id=Tiles110
+Tiles138                           ambientCG   https://ambientcg.com/view?id=Tiles138
+Tiles140                           ambientCG   https://ambientcg.com/view?id=Tiles140
+Tiles143                           ambientCG   https://ambientcg.com/view?id=Tiles143
+Tiles144                           ambientCG   https://ambientcg.com/view?id=Tiles144
+Travertine009                      ambientCG   https://ambientcg.com/view?id=Travertine009
+UtilityBox01                       Poly Haven  https://polyhaven.com/a/utility_box_01
+UtilityBox02                       Poly Haven  https://polyhaven.com/a/utility_box_02
+WoodFloor039                       ambientCG   https://ambientcg.com/view?id=WoodFloor039
+WoodFloor040                       ambientCG   https://ambientcg.com/view?id=WoodFloor040
+WoodFloor041                       ambientCG   https://ambientcg.com/view?id=WoodFloor041
+WoodFloor043                       ambientCG   https://ambientcg.com/view?id=WoodFloor043
+WoodFloor044                       ambientCG   https://ambientcg.com/view?id=WoodFloor044
+WoodFloor051                       ambientCG   https://ambientcg.com/view?id=WoodFloor051
+WoodFloor052                       ambientCG   https://ambientcg.com/view?id=WoodFloor052
+WoodFloor061                       ambientCG   https://ambientcg.com/view?id=WoodFloor061
+WoodFloor062                       ambientCG   https://ambientcg.com/view?id=WoodFloor062
+WoodFloor063                       ambientCG   https://ambientcg.com/view?id=WoodFloor063
+WoodFloor064                       ambientCG   https://ambientcg.com/view?id=WoodFloor064
+WoodFloor070                       ambientCG   https://ambientcg.com/view?id=WoodFloor070
+WoodFloor071                       ambientCG   https://ambientcg.com/view?id=WoodFloor071

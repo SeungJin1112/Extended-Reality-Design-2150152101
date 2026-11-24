@@ -1,0 +1,21 @@
+Asset Library Report (자동 생성: Backrooms > 4. Process Asset Library)
+집계 기준: 프리팹 + 표면 머티리얼(Structure: Materials/*.mat, 그 외: Textures 세트) + 오디오 클립
+
+Folder                        Prefabs  Materials  Audio  Total
+Player/Common                      10          0      0     10
+Player/ResearchBase                 2          0      0      2
+Player/Level0                       -
+Player/AmusementPark                -
+Player/PoolRooms                    -
+Structure/Common                   16         58      0     74
+Structure/ResearchBase             10         58      0     68
+Structure/Level0                    7         54      1     62
+Structure/AmusementPark            12         65      0     77
+Structure/PoolRooms                 2         67      0     69
+Objects/Common                     62          0      0     62
+Objects/ResearchBase               68          0      0     68
+Objects/Level0                     62          0      0     62
+Objects/AmusementPark              62          0      0     62
+Objects/PoolRooms                  68          0      0     68
+
+Total: 684

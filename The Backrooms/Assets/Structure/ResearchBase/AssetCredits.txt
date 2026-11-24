@@ -1,0 +1,71 @@
+Asset Credits - Structure/ResearchBase
+모든 항목은 CC0 1.0 (퍼블릭 도메인)입니다. 출처 표기 의무는 없지만 참고용으로 기록합니다.
+
+Concrete030                        ambientCG   https://ambientcg.com/view?id=Concrete030
+Concrete031                        ambientCG   https://ambientcg.com/view?id=Concrete031
+Concrete032                        ambientCG   https://ambientcg.com/view?id=Concrete032
+Concrete034                        ambientCG   https://ambientcg.com/view?id=Concrete034
+Concrete036                        ambientCG   https://ambientcg.com/view?id=Concrete036
+Concrete040                        ambientCG   https://ambientcg.com/view?id=Concrete040
+Concrete042A                       ambientCG   https://ambientcg.com/view?id=Concrete042A
+Concrete044D                       ambientCG   https://ambientcg.com/view?id=Concrete044D
+Concrete045                        ambientCG   https://ambientcg.com/view?id=Concrete045
+Concrete046                        ambientCG   https://ambientcg.com/view?id=Concrete046
+Concrete047A                       ambientCG   https://ambientcg.com/view?id=Concrete047A
+Concrete047B                       ambientCG   https://ambientcg.com/view?id=Concrete047B
+Concrete048                        ambientCG   https://ambientcg.com/view?id=Concrete048
+ConcreteRoadBarrier                Poly Haven  https://polyhaven.com/a/concrete_road_barrier
+ConcreteRoadBarrier02              Poly Haven  https://polyhaven.com/a/concrete_road_barrier_02
+CorrugatedSteel006A                ambientCG   https://ambientcg.com/view?id=CorrugatedSteel006A
+CorrugatedSteel006C                ambientCG   https://ambientcg.com/view?id=CorrugatedSteel006C
+CorrugatedSteel007A                ambientCG   https://ambientcg.com/view?id=CorrugatedSteel007A
+CorrugatedSteel007B                ambientCG   https://ambientcg.com/view?id=CorrugatedSteel007B
+CorrugatedSteel007C                ambientCG   https://ambientcg.com/view?id=CorrugatedSteel007C
+CorrugatedSteel009                 ambientCG   https://ambientcg.com/view?id=CorrugatedSteel009
+DiamondPlate006C                   ambientCG   https://ambientcg.com/view?id=DiamondPlate006C
+DiamondPlate008A                   ambientCG   https://ambientcg.com/view?id=DiamondPlate008A
+DiamondPlate008B                   ambientCG   https://ambientcg.com/view?id=DiamondPlate008B
+DiamondPlate008C                   ambientCG   https://ambientcg.com/view?id=DiamondPlate008C
+DiamondPlate009                    ambientCG   https://ambientcg.com/view?id=DiamondPlate009
+Fence007A                          ambientCG   https://ambientcg.com/view?id=Fence007A
+Fence007B                          ambientCG   https://ambientcg.com/view?id=Fence007B
+Fence008A                          ambientCG   https://ambientcg.com/view?id=Fence008A
+Fence008B                          ambientCG   https://ambientcg.com/view?id=Fence008B
+FireHydrant                        Poly Haven  https://polyhaven.com/a/fire_hydrant
+FloodLights                        Poly Haven  https://polyhaven.com/a/flood_lights
+Metal032                           ambientCG   https://ambientcg.com/view?id=Metal032
+Metal041A                          ambientCG   https://ambientcg.com/view?id=Metal041A
+Metal046B                          ambientCG   https://ambientcg.com/view?id=Metal046B
+Metal048A                          ambientCG   https://ambientcg.com/view?id=Metal048A
+Metal049A                          ambientCG   https://ambientcg.com/view?id=Metal049A
+Metal053C                          ambientCG   https://ambientcg.com/view?id=Metal053C
+Metal055A                          ambientCG   https://ambientcg.com/view?id=Metal055A
+Metal061B                          ambientCG   https://ambientcg.com/view?id=Metal061B
+Metal063                           ambientCG   https://ambientcg.com/view?id=Metal063
+Metal064                           ambientCG   https://ambientcg.com/view?id=Metal064
+MetalPlates001                     ambientCG   https://ambientcg.com/view?id=MetalPlates001
+MetalPlates003                     ambientCG   https://ambientcg.com/view?id=MetalPlates003
+MetalPlates004                     ambientCG   https://ambientcg.com/view?id=MetalPlates004
+MetalPlates005                     ambientCG   https://ambientcg.com/view?id=MetalPlates005
+MetalPlates006                     ambientCG   https://ambientcg.com/view?id=MetalPlates006
+MetalPlates007                     ambientCG   https://ambientcg.com/view?id=MetalPlates007
+MetalPlates008                     ambientCG   https://ambientcg.com/view?id=MetalPlates008
+MetalPlates009                     ambientCG   https://ambientcg.com/view?id=MetalPlates009
+MetalPlates010                     ambientCG   https://ambientcg.com/view?id=MetalPlates010
+MetalPlates011                     ambientCG   https://ambientcg.com/view?id=MetalPlates011
+MetalPlates012                     ambientCG   https://ambientcg.com/view?id=MetalPlates012
+MetalPlates013                     ambientCG   https://ambientcg.com/view?id=MetalPlates013
+MetalPlates014                     ambientCG   https://ambientcg.com/view?id=MetalPlates014
+MetalPlates015A                    ambientCG   https://ambientcg.com/view?id=MetalPlates015A
+MetalPlates015B                    ambientCG   https://ambientcg.com/view?id=MetalPlates015B
+MetalPlates017A                    ambientCG   https://ambientcg.com/view?id=MetalPlates017A
+ModularChainlinkFence              Poly Haven  https://polyhaven.com/a/modular_chainlink_fence
+ModularIndustrialPipes01           Poly Haven  https://polyhaven.com/a/modular_industrial_pipes_01
+RollershutterWindow01              Poly Haven  https://polyhaven.com/a/rollershutter_window_01
+RollershutterWindow02              Poly Haven  https://polyhaven.com/a/rollershutter_window_02
+RollershutterWindow03              Poly Haven  https://polyhaven.com/a/rollershutter_window_03
+SecurityLight                      Poly Haven  https://polyhaven.com/a/security_light
+Sign002                            ambientCG   https://ambientcg.com/view?id=Sign002
+Sign003                            ambientCG   https://ambientcg.com/view?id=Sign003
+Sign007                            ambientCG   https://ambientcg.com/view?id=Sign007
+Sign009                            ambientCG   https://ambientcg.com/view?id=Sign009

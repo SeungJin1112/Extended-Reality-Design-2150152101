@@ -17,11 +17,6 @@ using UnityEngine.XR.OpenXR.Features.MetaQuestSupport;
 
 namespace Backrooms.EditorTools
 {
-    /// <summary>
-    /// Meta Quest(OpenXR) + XR Interaction Toolkit 개발을 위한 프로젝트 설정을 한 번에 적용한다.
-    /// 메뉴: Backrooms > 1. Setup Quest Project
-    /// 여러 번 실행해도 안전하다(이미 있는 설정은 유지/갱신).
-    /// </summary>
     public static class QuestProjectSetup
     {
         const string SettingsFolder = "Assets/Settings";
@@ -41,10 +36,8 @@ namespace Backrooms.EditorTools
             SetupInteractionSimulator();
 
             AssetDatabase.SaveAssets();
-            Debug.Log("[Backrooms] Quest 프로젝트 설정 완료. 다음: Backrooms > 2. Build Backrooms Scene");
+            Debug.Log("[Backrooms] Quest 프로젝트 설정 완료. 다음: Backrooms > 2. Build World");
         }
-
-        // ---------------------------------------------------------------- URP
 
         static void SetupRenderPipeline()
         {
@@ -58,7 +51,7 @@ namespace Backrooms.EditorTools
             }
             rendererData.renderingMode = RenderingMode.Forward;
             rendererData.depthPrimingMode = DepthPrimingMode.Disabled;
-            rendererData.postProcessData = null; // Quest: 포스트 프로세싱 비활성
+            rendererData.postProcessData = null;
             EditorUtility.SetDirty(rendererData);
 
             var pipeline = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(RenderPipelinePath);
@@ -68,7 +61,6 @@ namespace Backrooms.EditorTools
                 AssetDatabase.CreateAsset(pipeline, RenderPipelinePath);
             }
 
-            // Quest 권장값: MSAA 4x, HDR 끔, 실시간 그림자 끔(조명은 라이트맵으로 베이크)
             pipeline.msaaSampleCount = 4;
             pipeline.supportsHDR = false;
             pipeline.renderScale = 1f;
@@ -77,7 +69,6 @@ namespace Backrooms.EditorTools
             pipeline.maxAdditionalLightsCount = 4;
             pipeline.shadowDistance = 0f;
 
-            // URP 14에서 setter가 internal인 항목은 SerializedObject로 설정
             var so = new SerializedObject(pipeline);
             so.FindProperty("m_MainLightRenderingMode").intValue = (int)LightRenderingMode.PerPixel;
             so.FindProperty("m_AdditionalLightsRenderingMode").intValue = (int)LightRenderingMode.PerPixel;
@@ -96,15 +87,12 @@ namespace Backrooms.EditorTools
             QualitySettings.SetQualityLevel(current, false);
         }
 
-        // ---------------------------------------------------------------- Player
-
         static void SetupPlayerSettings()
         {
             PlayerSettings.colorSpace = ColorSpace.Linear;
 
-            // Android (Meta Quest)
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "com.DefaultCompany.TheBackrooms");
-            PlayerSettings.Android.minSdkVersion = (AndroidSdkVersions)32; // Quest 요구: API 32 이상
+            PlayerSettings.Android.minSdkVersion = (AndroidSdkVersions)32;
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, false);
@@ -112,8 +100,6 @@ namespace Backrooms.EditorTools
             PlayerSettings.SetMobileMTRendering(BuildTargetGroup.Android, true);
             EditorUserBuildSettings.androidBuildSubtarget = MobileTextureSubtarget.ASTC;
         }
-
-        // ---------------------------------------------------------------- XR Plug-in Management
 
         static void SetupXRManagement()
         {
@@ -135,7 +121,6 @@ namespace Backrooms.EditorTools
 
         static XRGeneralSettingsPerBuildTarget GetOrCreateXRGeneralSettings()
         {
-            // 패키지 내부(GetOrCreate)와 같은 경로/방식을 쓰기 위해 리플렉션으로 호출
             var method = typeof(XRGeneralSettingsPerBuildTarget).GetMethod(
                 "GetOrCreate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (method != null && method.Invoke(null, null) is XRGeneralSettingsPerBuildTarget found)
@@ -151,8 +136,6 @@ namespace Backrooms.EditorTools
             EditorBuildSettings.AddConfigObject(XRGeneralSettings.k_SettingsKey, created, true);
             return created;
         }
-
-        // ---------------------------------------------------------------- OpenXR
 
         static void SetupOpenXRFeatures()
         {
@@ -170,10 +153,8 @@ namespace Backrooms.EditorTools
 
                 foreach (var feature in settings.GetFeatures())
                 {
-                    // Quest 컨트롤러 프로필은 PC(Quest Link)와 Android 모두 사용
                     if (feature is OculusTouchControllerProfile)
                         feature.enabled = true;
-                    // Meta Quest 지원 기능은 Android 전용
                     if (group == BuildTargetGroup.Android && feature is MetaQuestFeature)
                         feature.enabled = true;
                     EditorUtility.SetDirty(feature);
@@ -182,9 +163,6 @@ namespace Backrooms.EditorTools
             }
         }
 
-        // ---------------------------------------------------------------- XRI Samples
-
-        /// <summary>XR Origin 프리팹이 들어있는 Starter Assets와 에디터 테스트용 XR Interaction Simulator를 임포트.</summary>
         static void ImportXRInteractionSamples()
         {
             var samples = Sample.FindByPackage(XriPackage, null).ToList();
@@ -214,8 +192,9 @@ namespace Backrooms.EditorTools
             return File.Exists(relative) ? relative : null;
         }
 
-        /// <summary>헤드셋 없이 에디터 Play 모드에서 키보드/마우스로 XR을 테스트할 수 있게 한다(에디터 전용).</summary>
-        static void SetupInteractionSimulator()
+        public static void SetupInteractionSimulator() => SetupInteractionSimulator(false);
+
+        public static void SetupInteractionSimulator(bool enable)
         {
             var prefabPath = FindSamplePrefab("XR Interaction Simulator", "XR Interaction Simulator.prefab");
             if (prefabPath == null)
@@ -227,15 +206,13 @@ namespace Backrooms.EditorTools
                 return;
 
             var so = new SerializedObject(settings);
-            so.FindProperty("m_AutomaticallyInstantiateSimulatorPrefab").boolValue = true;
+            so.FindProperty("m_AutomaticallyInstantiateSimulatorPrefab").boolValue = enable;
             so.FindProperty("m_AutomaticallyInstantiateInEditorOnly").boolValue = true;
             so.FindProperty("m_UseClassic").boolValue = false;
             so.FindProperty("m_SimulatorPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(settings);
         }
-
-        // ---------------------------------------------------------------- Util
 
         public static void EnsureFolder(string path)
         {
