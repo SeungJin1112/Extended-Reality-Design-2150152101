@@ -18,6 +18,13 @@ namespace Backrooms
         public bool Finished { get; private set; }
         bool started;
 
+        // 한 번 재생한 대사 묶음은 같은 실행 중에 다시 나오지 않는다.
+        // (같은 구역 씬이 두 번 로드되거나 트리거를 다시 밟아도 반복되지 않게 이름으로 기록)
+        static readonly System.Collections.Generic.HashSet<string> played = new System.Collections.Generic.HashSet<string>();
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetPlayed() => played.Clear();
+
         IEnumerator Start()
         {
             if (startMode != StartMode.OnGameStart) yield break;
@@ -42,6 +49,7 @@ namespace Backrooms
         void Begin()
         {
             started = true;
+            if (!played.Add(gameObject.name)) { Finished = true; return; }
             NarrationSubtitles.Play(lines, () => Finished = true);
         }
     }

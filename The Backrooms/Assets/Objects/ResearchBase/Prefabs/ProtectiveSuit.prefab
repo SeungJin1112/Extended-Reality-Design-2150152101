@@ -1062,7 +1062,7 @@ GameObject:
   - component: {fileID: 6319086292977066565}
   - component: {fileID: 6319086292968066481}
   m_Layer: 0
-  m_Name: Mesh_protective suit
+  m_Name: ProtectiveSuit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

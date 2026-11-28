@@ -285,7 +285,8 @@ namespace Backrooms.EditorTools.World
             k.Place("UtilityBox02", CorX + 0.02f, 22.2f, 90f, y: 1.3f, snap: false, isStatic: true);
             k.Place("SecurityCamera02", CorX + CorW - 0.2f, 0.4f, 200f, y: 2.6f, snap: false, isStatic: true);
             k.Place("SecurityCamera01", CorX + 0.25f, CorD - 0.3f, 140f, y: 2.6f, snap: false, isStatic: true);
-            k.Place("MetalTrashCan", CorX + 0.35f, 7.6f, 0f);
+            // 통 두 개짜리 프리팹이라 90도 돌려 벽을 따라 세로로 세운다.
+            KeepOffWall(k.Place("MetalTrashCan", CorX + 0.35f, 7.6f, TrashRotY), k.Root, CorX + k.WallThickness / 2);
             k.Place("HandTruck", CorX + CorW - 0.4f, 18f, 260f);
             k.Place("WetFloorSign01", CorX + 1.2f, 21.5f, 30f);
             if (!abandoned)
@@ -301,6 +302,38 @@ namespace Backrooms.EditorTools.World
             var stain = WorldAssets.Transparent(S, "FloorStainMaterial", new Color(0.3f, 0.3f, 0.26f, 0.7f), ProceduralTextures.WaterStain($"{S}/Textures/Generated/FloorStainBaseColor.png", 5));
             for (int i = 0; i < 6; i++)
                 k.Quad("FloorStain", new Vector3(CorX + 0.6f + (float)k.Rng.NextDouble() * (CorW - 1.2f), 0.004f, 3f + i * 4.3f), new Vector2(1f + (float)k.Rng.NextDouble(), 1f + (float)k.Rng.NextDouble()), new Vector3(90, i * 61f, 0), stain);
+        }
+
+        const float TrashRotY = 90f;
+
+        // 소품 전체(뚜껑 등 딸린 조각 포함)가 왼쪽 벽면(x = wallFace)을 뚫지 않도록 복도 안쪽으로 민다.
+        static void KeepOffWall(GameObject go, Transform root, float wallFace, float gap = 0.04f)
+        {
+            if (go == null) return;
+            var b = ZoneKit.Bounds(go);
+            float overlap = (root.position.x + wallFace + gap) - b.min.x;
+            if (overlap > 0f) go.transform.position += Vector3.right * overlap;
+        }
+
+        // 이미 만들어진 연구 거점 씬(Zone00, Zone04)의 쓰레기통 위치를 바로 고친다. (EditorJobBridge로 호출)
+        static void FixTrashCansInScenes()
+        {
+            foreach (var zone in new[] { "Zone00ResearchBase", "Zone04ResearchBaseEmpty" })
+            {
+                var scene = UnityEngine.SceneManagement.SceneManager.GetSceneByPath(BackroomsWorldBuilder.ZoneScenePath(zone));
+                if (!scene.IsValid() || !scene.isLoaded) continue;
+                foreach (var root in scene.GetRootGameObjects())
+                    foreach (var t in root.GetComponentsInChildren<Transform>(true))
+                        if (t.name == "MetalTrashCan")
+                        {
+                            t.localPosition = new Vector3(CorX + 0.35f, t.localPosition.y, 7.6f);
+                            t.localRotation = Quaternion.Euler(0f, TrashRotY, 0f);
+                            KeepOffWall(t.gameObject, root.transform, CorX + 0.125f);
+                        }
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+                UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+            }
+            Debug.Log("[Backrooms] 쓰레기통 위치 보정 완료");
         }
 
         static void BuildSigns(ZoneKit k, bool abandoned)

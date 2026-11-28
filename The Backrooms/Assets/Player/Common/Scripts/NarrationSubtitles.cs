@@ -141,9 +141,9 @@ namespace Backrooms
             group = gameObject.AddComponent<CanvasGroup>();
             group.interactable = false;
             group.blocksRaycasts = false;
-            // 큰 글자 크기 × 작은 스케일로 그려야 VR에서 글자가 선명하다. (패널 1.5m × 0.34m)
+            // 큰 글자 크기 × 작은 스케일로 그려야 VR에서 글자가 선명하다. (패널 1.5m × 0.24m, 대사 두 줄까지)
             var rt = (RectTransform)transform;
-            rt.sizeDelta = new Vector2(3000f, 680f);
+            rt.sizeDelta = new Vector2(3000f, 480f);
             rt.localScale = Vector3.one * 0.0005f;
 
             var bg = new GameObject("Background", typeof(RectTransform), typeof(Image));
@@ -161,8 +161,8 @@ namespace Backrooms
             bar.GetComponent<Image>().color = new Color(0.84f, 0.78f, 0.42f, 1f);
 
             var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            speakerText = MakeText("Speaker", font, 84, FontStyle.Bold, new Color(0.84f, 0.78f, 0.42f), new Vector2(100f, -50f), new Vector2(-100f, 120f), TextAnchor.UpperLeft);
-            bodyText = MakeText("Body", font, 112, FontStyle.Normal, new Color(0.95f, 0.95f, 0.93f), new Vector2(100f, -190f), new Vector2(-100f, 440f), TextAnchor.UpperLeft);
+            speakerText = MakeText("Speaker", font, 76, FontStyle.Bold, new Color(0.84f, 0.78f, 0.42f), new Vector2(100f, -45f), new Vector2(-100f, 100f), TextAnchor.UpperLeft);
+            bodyText = MakeText("Body", font, 112, FontStyle.Normal, new Color(0.95f, 0.95f, 0.93f), new Vector2(100f, -165f), new Vector2(-100f, 280f), TextAnchor.UpperLeft);
         }
 
         Text MakeText(string name, Font font, int size, FontStyle style, Color color, Vector2 topLeft, Vector2 rightAndHeight, TextAnchor anchor)

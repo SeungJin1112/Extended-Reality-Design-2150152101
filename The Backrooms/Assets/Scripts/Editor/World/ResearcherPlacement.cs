@@ -17,14 +17,34 @@ namespace Backrooms.EditorTools.World
 
         enum Stance { Stand, Record, Crouch }
 
-        // 구역 로컬 좌표. 균열(x=25, z=27.5) 앞 곁복도(z 26~29). 플레이어가 지나갈 가운데 길은 비워 둔다.
-        static readonly (string name, float x, float z, float rotY, Stance stance)[] Spots =
+        // Mixamo 애니메이션 (Models/ProtectiveSuit/Animations/Researcher{Key}.fbx). 없으면 Stance 코드 자세로 대신한다.
+        const string AnimDir = "Assets/Objects/ResearchBase/Models/ProtectiveSuit/Animations";
+        const string ControllerDir = AnimDir + "/Controllers";
+
+        // 구역 로컬 좌표. 메인 복도 x 12~15, 균열 곁복도 z 26~29, 균열 x=25 z=27.5.
+        // 플레이어가 지나가는 길(복도 가운데)은 비워 둔다.
+        static readonly (string name, float x, float z, float rotY, string anim, float offset, Stance fallback)[] Spots =
         {
-            ("Researcher_Observer", 23.8f, 26.4f, 70f, Stance.Stand),    // 균열 바로 옆에서 안쪽을 지켜봄
-            ("Researcher_Recorder", 20.7f, 28.3f, 95f, Stance.Record),   // 카메라 카트 옆에서 기록
-            ("Researcher_Guard", 16.2f, 28.4f, 240f, Stance.Stand),      // 복도 입구에서 들어오는 플레이어 쪽을 봄
-            ("Researcher_Inspector", 23.95f, 28.55f, 185f, Stance.Crouch), // 균열 앞 바닥 잔해를 쪼그려 앉아 살핌
+            // 메인 복도: 혼자 서 있거나 둘러보는 연구원
+            ("Researcher_Guard",     12.6f, 24.8f, 150f, "Idle",        0.10f, Stance.Stand),  // 곁복도 입구에서 들어오는 플레이어 쪽을 봄
+            ("Researcher_Observer",  12.55f, 14.8f, 100f, "LookAround", 0.35f, Stance.Stand),  // 보안실 문 옆에서 두리번
+            ("Researcher_Wanderer",  14.35f, 9.2f, 250f, "LookAround2",  0.60f, Stance.Stand),  // 창고 문 앞에서 두리번
+            // 균열 곁복도: 둘이 마주 보고 이야기 (한 명은 말하고, 한 명은 고개를 저음)
+            ("Researcher_Talker",    17.3f, 28.35f, 90f, "Arguing",     0.00f, Stance.Record),
+            ("Researcher_Listener",  18.45f, 28.35f, 270f, "ShakeHead", 0.25f, Stance.Stand),
+            // 균열 바로 앞: 혼자 떨어져 바닥 잔해를 붙잡고 있다가, 일어나 주변을 둘러보고 다시 앉기를 반복
+            ("Researcher_Inspector", 23.95f, 28.55f, 185f, "Inspect", 0.00f, Stance.Crouch),
         };
+
+        static readonly string[] AnimKeys = { "Idle", "LookAround", "LookAround2", "Arguing", "ShakeHead", "HoldingDown" };
+        static readonly string[] LowAnims = { "HoldingDown", "Inspect" };
+
+        // 두 동작을 번갈아 재생하는 조합. (첫 동작, 반복 횟수, 다음 동작, 반복 횟수)
+        static readonly System.Collections.Generic.Dictionary<string, (string a, float loopsA, string b, float loopsB)> Combos =
+            new System.Collections.Generic.Dictionary<string, (string, float, string, float)>
+            {
+                { "Inspect", ("HoldingDown", 1f, "LookAround", 1f) }, // 약 13초 앉아 있다가 6초 일어나 둘러봄
+            };
 
         public static void Place(Transform zoneRoot, Transform parent)
         {
@@ -32,12 +52,14 @@ namespace Backrooms.EditorTools.World
             var path = ZoneKit.FindPrefab(PrefabName);
             var prefab = path != null ? AssetDatabase.LoadAssetAtPath<GameObject>(path) : null;
             if (prefab == null) { Debug.LogWarning($"[Backrooms] 연구원 프리팹 없음: {PrefabName}"); return; }
+            var controllers = SetupAnimations();
 
             var old = parent.Find(GroupName);
             if (old != null) Object.DestroyImmediate(old.gameObject);
             var group = new GameObject(GroupName).transform;
             group.SetParent(parent, false);
 
+            int animated = 0;
             foreach (var s in Spots)
             {
                 var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, group);
@@ -50,21 +72,111 @@ namespace Backrooms.EditorTools.World
                 if (b.size.y > 0.01f) go.transform.localScale *= TargetHeight / b.size.y;
                 b = ZoneKit.Bounds(go);
                 float soleOffset = LowestBone(go) - b.min.y;
-
-                Pose(go, s.stance);
-
-                // 자세를 바꾼 뒤 가장 낮은 뼈(발끝) 기준으로 바닥에 붙인다.
                 float floor = zoneRoot.position.y;
+
+                bool low;
+                var anim = go.GetComponentInChildren<Animator>();
+                if (anim != null && controllers.TryGetValue(s.anim, out var entry))
+                {
+                    // 애니메이션: 실행 중에는 Animator가 재생하고, 에디터에서는 해당 프레임 자세를 미리 찍어 둔다.
+                    anim.enabled = true;
+                    anim.runtimeAnimatorController = entry.controller;
+                    anim.applyRootMotion = false;
+                    anim.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+                    entry.clip.SampleAnimation(anim.gameObject, entry.clip.length * s.offset);
+                    var ra = go.AddComponent<ResearcherAnimation>();
+                    ra.stateName = entry.state;
+                    ra.startOffset = s.offset;
+                    low = LowAnims.Contains(s.anim);
+                    animated++;
+                }
+                else
+                {
+                    Pose(go, s.fallback);
+                    low = s.fallback == Stance.Crouch;
+                }
+
+                // 자세를 잡은 뒤 가장 낮은 뼈(발끝) 기준으로 바닥에 붙인다.
                 go.transform.position += Vector3.up * (floor - (LowestBone(go) - soleOffset));
 
                 var col = go.AddComponent<CapsuleCollider>();
                 float sc = go.transform.lossyScale.y;
-                float h = s.stance == Stance.Crouch ? 1.15f : TargetHeight;
+                float h = low ? 1.15f : TargetHeight;
                 col.height = h / sc;
-                col.radius = (s.stance == Stance.Crouch ? 0.4f : 0.28f) / sc;
+                col.radius = (low ? 0.4f : 0.28f) / sc;
                 col.center = new Vector3(0f, h / 2f / sc, 0f);
             }
-            Debug.Log($"[Backrooms] 연구원 {Spots.Length}명 배치 완료");
+            Debug.Log($"[Backrooms] 연구원 {Spots.Length}명 배치 완료 (애니메이션 {animated}명)");
+        }
+
+        // Mixamo FBX를 Humanoid로 가져오고, 동작마다 한 상태짜리 Animator Controller를 만든다.
+        // 이미 설정된 파일은 건너뛰므로 여러 번 불러도 된다.
+        static System.Collections.Generic.Dictionary<string, (RuntimeAnimatorController controller, AnimationClip clip, string state)> SetupAnimations()
+        {
+            var result = new System.Collections.Generic.Dictionary<string, (RuntimeAnimatorController controller, AnimationClip clip, string state)>();
+            foreach (var key in AnimKeys)
+            {
+                var fbx = $"{AnimDir}/Researcher{key}.fbx";
+                if (!(AssetImporter.GetAtPath(fbx) is ModelImporter imp)) continue;
+
+                string clipName = $"Researcher{key}";
+                bool ready = imp.animationType == ModelImporterAnimationType.Human && imp.userData == "BackroomsPrepared"
+                             && imp.clipAnimations.Length > 0 && imp.clipAnimations[0].name == clipName;
+                if (!ready)
+                {
+                    imp.animationType = ModelImporterAnimationType.Human;
+                    imp.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+                    imp.importAnimation = true;
+                    imp.importCameras = false;
+                    imp.importLights = false;
+                    imp.materialImportMode = ModelImporterMaterialImportMode.None;
+                    imp.userData = "BackroomsPrepared"; // AssetLibraryProcessor가 리그를 지우지 않도록
+                    imp.SaveAndReimport();
+
+                    var clips = imp.defaultClipAnimations;
+                    if (clips.Length == 0) { Debug.LogWarning($"[Backrooms] {fbx}: 애니메이션 클립 없음"); continue; }
+                    var c = clips[0];
+                    c.name = clipName;
+                    c.loopTime = true;
+                    c.lockRootRotation = true; c.keepOriginalOrientation = true;
+                    c.lockRootHeightY = true; c.heightFromFeet = true; c.keepOriginalPositionY = false;
+                    c.lockRootPositionXZ = true; c.keepOriginalPositionXZ = true;
+                    imp.clipAnimations = new[] { c };
+                    imp.SaveAndReimport();
+                }
+
+                var clip = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<AnimationClip>().FirstOrDefault(a => a.name == clipName);
+                if (clip == null) continue;
+
+                QuestProjectSetup.EnsureFolder(ControllerDir);
+                var ctrlPath = $"{ControllerDir}/{clipName}.controller";
+                var ctrl = AssetDatabase.LoadAssetAtPath<UnityEditor.Animations.AnimatorController>(ctrlPath);
+                if (ctrl == null) ctrl = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPathWithClip(ctrlPath, clip);
+                var state = ctrl.layers[0].stateMachine.defaultState;
+                if (state.motion != clip) { state.motion = clip; EditorUtility.SetDirty(ctrl); }
+                result[key] = (ctrl, clip, state.name);
+            }
+
+            // 조합 컨트롤러: A를 몇 번 반복한 뒤 B로 부드럽게 넘어가고, B가 끝나면 다시 A로.
+            foreach (var combo in Combos)
+            {
+                if (!result.TryGetValue(combo.Value.a, out var A) || !result.TryGetValue(combo.Value.b, out var B)) continue;
+                var ctrlPath = $"{ControllerDir}/Researcher{combo.Key}.controller";
+                AssetDatabase.DeleteAsset(ctrlPath);
+                var ctrl = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(ctrlPath);
+                var sm = ctrl.layers[0].stateMachine;
+                var sa = sm.AddState(combo.Value.a); sa.motion = A.clip;
+                var sb = sm.AddState(combo.Value.b); sb.motion = B.clip;
+                sm.defaultState = sa;
+                var toB = sa.AddTransition(sb);
+                toB.hasExitTime = true; toB.exitTime = combo.Value.loopsA; toB.hasFixedDuration = true; toB.duration = 0.8f;
+                var toA = sb.AddTransition(sa);
+                toA.hasExitTime = true; toA.exitTime = combo.Value.loopsB; toA.hasFixedDuration = true; toA.duration = 0.8f;
+                EditorUtility.SetDirty(ctrl);
+                result[combo.Key] = (ctrl, A.clip, sa.name);
+            }
+            AssetDatabase.SaveAssets();
+            return result;
         }
 
         static float LowestBone(GameObject go)
@@ -157,12 +269,12 @@ namespace Backrooms.EditorTools.World
             var tex = new Texture2D(1280, 720, TextureFormat.RGB24, false);
             var views = new (string name, Vector3 pos, Vector3 look)[]
             {
-                ("Corridor", new Vector3(17.5f, 1.6f, 27.5f), new Vector3(24.5f, 0.9f, 27.5f)),
-                ("FromBreach", new Vector3(24.6f, 1.6f, 27.4f), new Vector3(18f, 0.8f, 27.6f)),
+                ("MainCorridor", new Vector3(13.5f, 1.6f, 4.5f), new Vector3(13.4f, 1.1f, 16f)),
+                ("Guard", new Vector3(14.2f, 1.6f, 21.5f), new Vector3(12.6f, 1.0f, 24.8f)),
+                ("Pair", new Vector3(17.85f, 1.5f, 26.3f), new Vector3(17.85f, 1.1f, 28.35f)),
+                ("SideCorridor", new Vector3(15.6f, 1.6f, 27.3f), new Vector3(24.5f, 0.9f, 27.6f)),
                 ("Inspector", new Vector3(22.3f, 1.3f, 27.2f), new Vector3(23.95f, 0.5f, 28.4f)),
-                ("InspectorSide", new Vector3(24.6f, 1.1f, 26.9f), new Vector3(23.95f, 0.5f, 28.4f)),
                 ("InspectorFront", new Vector3(23.6f, 1.0f, 26.9f), new Vector3(23.95f, 0.45f, 28.5f)),
-                ("Recorder", new Vector3(19.0f, 1.5f, 26.6f), new Vector3(20.8f, 1.1f, 28.3f)),
             };
             foreach (var v in views)
             {

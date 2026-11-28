@@ -8,30 +8,36 @@ using Line = Backrooms.NarrationSubtitles.Line;
 namespace Backrooms.EditorTools.World
 {
     // 연구 거점(Zone00)의 나레이션 자막을 배치한다.
-    // 1) 게임 시작: 관측팀이 무전으로 상황을 설명하고 균열 쪽으로 부른다.
-    // 2) 균열 앞 곁복도에 들어서면: 연구원이 Level 0 진입을 안내한다.
-    // 실제 대사는 씬의 Narration 오브젝트 Inspector에서 고칠 수 있지만, 월드를 다시 지으면 아래 내용으로 돌아간다.
+    // 1) 게임 시작 2.5초 후: 관측팀이 무전으로 상황을 설명하고 균열 쪽으로 부른다.
+    // 2) 균열 앞 곁복도에 들어서면: 현장 연구원이 Level 0 진입을 안내한다. (1이 끝난 뒤에 재생)
+    // 대사는 이 파일의 Intro() / Breach()에서 고친다. 씬 Inspector에서 고쳐도 Build World 시 이 내용으로 돌아간다.
     public static class ResearchBaseNarration
     {
         const string ZoneName = "Zone00ResearchBase";
         const string GroupName = "Narration";
 
+        // 화자 이름은 두 가지로 고정한다. 한 줄 대사는 VR 자막에서 한 줄(약 30자)에 들어오게 짧게 쓴다.
+        const string Radio = "관측팀 (무전)";
+        const string Field = "현장 연구원";
+
         static Line L(string speaker, string text) => new Line { speaker = speaker, text = text };
 
+        // 시작 무전: 상황 → 장소 → 발견 → 목적지 순서
         static Line[] Intro() => new[]
         {
-            L("관측팀 · 무전", "들립니까? 여기는 SITE-0 관측팀. 거점 진입 확인했습니다."),
-            L("관측팀 · 무전", "지금 계신 곳은 B3 기계실, 저희 연구 거점입니다. 안전선 안쪽은 안전하니 천천히 오세요."),
-            L("관측팀 · 무전", "사흘 전, 이 층 벽 너머에서 있을 수 없는 공간이 발견됐습니다. 저희는 그곳을 '백룸'이라고 부릅니다."),
-            L("관측팀 · 무전", "복도 끝에서 오른쪽, 벽이 무너진 곳으로 와 주세요. 저희가 거기서 기다리고 있습니다."),
+            L(Radio, "SITE-0 관측팀입니다. 거점 진입을 확인했습니다."),
+            L(Radio, "이곳은 B3 기계실, 저희 연구 거점입니다."),
+            L(Radio, "사흘 전, 이 층 벽 너머에서 '백룸'이 발견됐습니다."),
+            L(Radio, "복도 끝에서 오른쪽, 무너진 벽 앞으로 오십시오."),
         };
 
+        // 균열 앞 안내: 도착 → 묘사 → 임무 → 복선
         static Line[] Breach() => new[]
         {
-            L("연구원", "오셨군요. 이 균열 너머가 Level 0입니다."),
-            L("연구원", "노란 벽지, 젖은 카펫, 끝없이 울리는 형광등 소리. 안으로 들어가면 방향 감각부터 흐려질 겁니다."),
-            L("연구원", "이번 임무는 안쪽 첫 번째 문까지 확인하고 돌아오는 것뿐입니다. 무전은 계속 열어 두겠습니다."),
-            L("연구원", "…혹시 공간이 바뀌는 것 같으면, 멈추지 말고 계속 걸으세요."),
+            L(Field, "오셨군요. 이 균열 너머가 Level 0입니다."),
+            L(Field, "노란 벽지, 젖은 카펫, 끊이지 않는 형광등 소리…"),
+            L(Field, "안쪽 첫 번째 문까지만 확인하고 돌아오시면 됩니다."),
+            L(Field, "공간이 바뀌는 것 같으면, 멈추지 말고 계속 걸으십시오."),
         };
 
         public static void Place(Transform zoneRoot)
