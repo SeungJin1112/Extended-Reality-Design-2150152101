@@ -69,3 +69,6 @@ VintageStapler                     Poly Haven  https://polyhaven.com/a/vintage_s
 WoodenLadder                       Poly Haven  https://polyhaven.com/a/wooden_ladder
 WoodenMilitaryCrate                Poly Haven  https://polyhaven.com/a/wooden_military_crate
 WornMetalRack                      Poly Haven  https://polyhaven.com/a/worn_metal_rack
+
+아래 항목은 CC0가 아니라 Unity Asset Store 표준 EULA를 따릅니다.
+ProtectiveSuit                     Unity Asset Store  "Protective suit man" (Dmitriy Poskrebyshev)

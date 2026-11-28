@@ -42,6 +42,11 @@ namespace Backrooms.EditorTools.World
             BuildShell(k, name, level0);
             BuildCorridorDressing(k, abandoned);
             BuildSigns(k, abandoned);
+            if (!abandoned)
+            {
+                ResearcherPlacement.Place(k.Root, k.Props);
+                ResearchBaseNarration.Place(k.Root);
+            }
 
             var entry = k.Place("DoorMetal", CorX + CorW / 2, -0.12f, 0f, isStatic: false);
             if (entry != null) entry.name = "EntryDoor";

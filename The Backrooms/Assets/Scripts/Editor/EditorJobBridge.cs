@@ -44,6 +44,8 @@ namespace Backrooms.EditorTools
                 {
                     var l = line.Trim();
                     if (l.Length == 0) continue;
+                    // Unity 창이 비활성이어도 바뀐 파일을 불러오고 스크립트를 다시 컴파일하게 한다.
+                    if (l == "refresh") { AssetDatabase.Refresh(); continue; }
                     var eq = l.IndexOf('=');
                     if (eq > 0 && !l.Contains("("))
                     {
